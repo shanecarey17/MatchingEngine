@@ -141,3 +141,16 @@ We read in each order one by one, and send it to an exchange for a particular co
 
 ## Time
 
+real	0m1.522s
+user	0m1.472s
+sys	0m0.045s
+
+## Usage
+
+### Build
+
+g++ MatchingEngine/*.cpp -o MatchingEngine
+
+### Run
+
+./MatchingEngine in_file_path out_file_path

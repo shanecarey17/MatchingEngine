@@ -14,7 +14,7 @@
 int main(int argc, char *argv[])
 {
     Reader inReader(argv[1]);
-    Logger::logger().setOutFile(argv[2]);
+    Logger::logger(argv[2]);
     
     Exchange exchange = Exchange();
     

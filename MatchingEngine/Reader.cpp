@@ -11,9 +11,7 @@
 #include <sstream>
 #include <vector>
 
-Reader::Reader(std::string file) {
-    infile = std::ifstream(file);
-}
+Reader::Reader(std::string file) : infile(file) {}
 
 Order *Reader::nextOrder() {
     std::string line;

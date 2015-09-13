@@ -14,22 +14,14 @@
 
 class Logger {
 public:
-    static Logger &logger() {
-        static Logger logger;
-        return logger;
-    };
-    
-    void setOutFile(std::string file);
-    
-    void writeToOutFile(std::string output);
+    static Logger *logger(std::string filename);
+    void log(std::string output);
+    ~Logger();
     
 private:
-    std::ofstream outFile;
-    
-    Logger() {};
-    Logger(Logger const&) = delete;
-    Logger& operator=(Logger const&) = delete;
-    
+    static Logger *instance;
+    std::ofstream outStream;
+    Logger(std::string filename) : outStream(filename) {};
 };
 
 #endif /* Logger_cpp */

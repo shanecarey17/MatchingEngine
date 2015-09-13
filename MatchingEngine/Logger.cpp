@@ -10,10 +10,19 @@
 
 #include <iostream>
 
-void Logger::setOutFile(std::string file) {
-    outFile = std::ofstream(file);
+Logger *Logger::instance = NULL;
+
+Logger *Logger::logger(std::string filename) {
+    if(instance == NULL){
+        instance = new Logger(filename);
+    }
+    return instance;
 }
 
-void Logger::writeToOutFile(std::string output) {
-    outFile << output << std::endl;
+void Logger::log(std::string output) {
+    outStream << output << std::endl;
+}
+
+Logger::~Logger() {
+    delete instance;
 }

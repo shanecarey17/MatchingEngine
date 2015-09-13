@@ -131,3 +131,13 @@ Implementations will be graded on two metrics: first correctness and then speed.
 -  Correctness: The matching engine's ability to produce FILLs with the same attributes, in the same order. We will judge correctness before speed.
 -  Speed: Simply the fastest implementation using the linux time command will win
 
+# Solution
+
+For each commodity we maintain two priority queues, arranged by time/price low for sells and high for buys. The solution takes advantage of the invariant that within the queue, the next order is necessarily between the top of each queue, and transacting that will cause a cascade of other optimal orders.
+
+To allow for cancelling and replacing orders we maintain a hash table relating the unique id of each order to the order in memory, and mark the order s invalid on a cancel or replace. This allows a fast method to remove orders without disrupting the integrity of the priority queue. Invalid orders are simply disregarded when they reach the top of the queue.
+
+We read in each order one by one, and send it to an exchange for a particular commodity through a hash table, where it will be put in the book. Upon entering the book, we reduce the order book for that particular commodity by enacting the cascade of immediate trades. Then we fetch the next order.
+
+## Time
+

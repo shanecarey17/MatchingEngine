@@ -6,6 +6,9 @@
 //  Copyright © 2015 Shane Carey. All rights reserved.
 //
 
+#define OUT_FILE "/Users/Shane Carey/desktop/MatchingEngine/MatchingEngine/data/fills.txt"
+#define IN_FILE "/Users/Shane Carey/desktop/MatchingEngine/MatchingEngine/data/small_orders.txt"
+
 #include "Reader.hpp"
 #include "Logger.hpp"
 #include "Exchange.hpp"
@@ -13,8 +16,8 @@
 
 int main(int argc, char *argv[])
 {
-    Reader inReader(argv[1]);
-    Logger::logger(argv[2]);
+    Reader inReader(IN_FILE);
+    Logger::logger(OUT_FILE);
     
     Exchange exchange = Exchange();
     
@@ -23,6 +26,8 @@ int main(int argc, char *argv[])
         exchange.match(nextOrder);
         nextOrder = inReader.nextOrder();
     }
+    
+    Logger::deallocate();
     
     return 0;
 }

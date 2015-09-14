@@ -23,6 +23,6 @@ void Logger::log(std::string output) {
     outStream << output << std::endl;
 }
 
-Logger::~Logger() {
+void Logger::deallocate() {
     delete instance;
 }

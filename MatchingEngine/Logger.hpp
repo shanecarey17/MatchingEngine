@@ -16,7 +16,7 @@ class Logger {
 public:
     static Logger *logger(std::string filename);
     void log(std::string output);
-    ~Logger();
+    static void deallocate();
     
 private:
     static Logger *instance;

@@ -8,14 +8,13 @@
 
 #include "Reader.hpp"
 
+#include <iostream>
 #include <sstream>
 #include <vector>
 
-Reader::Reader(std::string file) : infile(file) {}
-
 Order *Reader::nextOrder() {
     std::string line;
-    if (std::getline(infile, line)) {
+    if (std::getline(std::cin, line)) {
         // Tokenize string
         std::istringstream iss(line);
         std::vector<std::string> tokens;

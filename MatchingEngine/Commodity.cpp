@@ -6,9 +6,9 @@
 //  Copyright © 2015 Shane Carey. All rights reserved.
 //
 
-#include "Commodity.hpp"
+#include <iostream>
 
-#include "Logger.hpp"
+#include "Commodity.hpp"
 
 Commodity::Commodity() {
     buyQueue = std::priority_queue<Order *, std::vector<Order *>, Order>();
@@ -60,8 +60,7 @@ void Commodity::reduceOrderBook() {
         topSell->quantity -= quantity;
         
         // Log the FILL
-        std::string fill = "FILL " + topBuy->symbol + " " + std::to_string(topBuy->id) + " " + std::to_string(topSell->id) + " " + std::to_string(quantity) + " " + std::to_string(topSell->price);
-        Logger::logger("N/A")->log(fill);
+        std::cout << "FILL " + topBuy->symbol + " " + std::to_string(topBuy->id) + " " + std::to_string(topSell->id) + " " + std::to_string(quantity) + " " + std::to_string(topSell->price) << std::endl;
         
         // Remove completely filled orders
         if (topBuy->quantity == 0) {

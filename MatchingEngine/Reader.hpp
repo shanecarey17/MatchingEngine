@@ -16,12 +16,8 @@
 
 class Reader {
 public:
-    Reader(std::string file);
-    
     Order *nextOrder();
     
-private:
-    std::ifstream infile;
 };
 
 #endif /* Reader_cpp */

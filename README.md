@@ -141,9 +141,11 @@ We read in each order one by one, and send it to an exchange for a particular co
 
 ## Time
 
-real	0m1.522s
-user	0m1.472s
-sys	0m0.045s
+real	0m1.336s
+
+user	0m1.286s
+
+sys	0m0.046s
 
 ## Usage
 

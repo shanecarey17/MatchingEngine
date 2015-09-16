@@ -4,4 +4,6 @@ PROJECT(hackathon)
 
 add_subdirectory(MatchingEngine)
 
-add_executable(MatchingEngine Commodity.cpp Exchange.cpp Logger.cpp Order.cpp Reader.cpp main.cpp)
+file(GLOB SOURCES "MatchingEngine/*.cpp")
+
+add_executable(MatchingEngine ${SOURCES})

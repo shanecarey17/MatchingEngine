@@ -16,9 +16,11 @@
 int main(int argc, char *argv[]) {
     
     std::ifstream in(argv[1]);
+    auto cinBuf = std::cin.rdbuf();
     std::cin.rdbuf(in.rdbuf());
     
     std::ofstream out(argv[2]);
+    auto coutBuf = std::cout.rdbuf();
     std::cout.rdbuf(out.rdbuf());
     
     Reader reader;
@@ -28,6 +30,9 @@ int main(int argc, char *argv[]) {
     while ((nextOrder = reader.nextOrder()) != NULL) {
         exchange.match(nextOrder);
     }
+    
+    std::cin.rdbuf(cinBuf);
+    std::cout.rdbuf(coutBuf);
     
     return 0;
 }

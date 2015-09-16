@@ -27,6 +27,34 @@ void Commodity::match(Order *inOrder) {
     }
 }
 
+void Commodity::handleOrder(Order *order) {
+    ordersBook[order->id] = order;
+    if (order->side[0] == 'B') {
+        buyQueue.push(order);
+    } else {
+        sellQueue.push(order);
+    }
+    
+    reduceOrderBook();
+};
+
+void Commodity::handleCancel(Order *cancel) {
+    // Set order with same id inactive
+    Order *toCancel = ordersBook[cancel->id];
+    toCancel->active = false;
+    ordersBook.erase(toCancel->id);
+    
+    delete cancel;
+    
+    reduceOrderBook();
+};
+
+void Commodity::handleReplace(Order *replace) {
+    Order *toReplace = ordersBook[replace->id];
+    toReplace->active = false;
+    handleOrder(replace);
+};
+
 void Commodity::reduceOrderBook() {
     // Perform matching until there is no match
     while (true) {
@@ -76,34 +104,6 @@ void Commodity::reduceOrderBook() {
         }
     }
 }
-
-void Commodity::handleOrder(Order *order) {
-    ordersBook[order->id] = order;
-    if (order->side[0] == 'B') {
-        buyQueue.push(order);
-    } else {
-        sellQueue.push(order);
-    }
-    
-    reduceOrderBook();
-};
-
-void Commodity::handleCancel(Order *cancel) {
-    // Set order with same id inactive
-    Order *toCancel = ordersBook[cancel->id];
-    toCancel->active = false;
-    ordersBook.erase(toCancel->id);
-    
-    delete cancel;
-    
-    reduceOrderBook();
-};
-
-void Commodity::handleReplace(Order *replace) {
-    Order *toReplace = ordersBook[replace->id];
-    toReplace->active = false;
-    handleOrder(replace);
-};
 
 Commodity::~Commodity() {
     for (std::unordered_map<int, Order *>::iterator it = ordersBook.begin(); it != ordersBook.end(); it++) {

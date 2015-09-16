@@ -60,7 +60,7 @@ void Commodity::reduceOrderBook() {
         topSell->quantity -= quantity;
         
         // Log the FILL
-        std::cout << "FILL " + topBuy->symbol + " " + std::to_string(topBuy->id) + " " + std::to_string(topSell->id) + " " + std::to_string(quantity) + " " + std::to_string(topSell->price) << std::endl;
+        std::cout << "FILL " << topBuy->symbol << " " << topBuy->id << " " << topSell->id << " " << quantity << " " << topSell->price << std::endl;
         
         // Remove completely filled orders
         if (topBuy->quantity == 0) {

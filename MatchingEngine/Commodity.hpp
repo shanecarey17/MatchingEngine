@@ -16,8 +16,6 @@
 
 class Commodity {
 public:
-    Commodity();
-    
     ~Commodity();
     
     void match(Order *inOrder);
@@ -29,7 +27,6 @@ private:
     
     // Hash map to each order, by id
     std::unordered_map<int, Order *> ordersBook;
-    std::unordered_map<int, Order *> cancelledOrdersBook;
     
     void reduceOrderBook();
     

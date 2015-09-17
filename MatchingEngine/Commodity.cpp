@@ -10,12 +10,6 @@
 
 #include "Commodity.hpp"
 
-Commodity::Commodity() {
-    buyQueue = std::priority_queue<Order *, std::vector<Order *>, Order>();
-    sellQueue = std::priority_queue<Order *, std::vector<Order *>, Order>();
-    ordersBook = std::unordered_map<int, Order *>();
-};
-
 void Commodity::match(Order *inOrder) {
     // Handle order, cancel, replace
     if (inOrder->type[0] == 'O') {
@@ -43,7 +37,6 @@ void Commodity::handleCancel(Order *cancel) {
     Order *toCancel = ordersBook[cancel->id];
     toCancel->active = false;
     ordersBook.erase(cancel->id);
-    cancelledOrdersBook[cancel->id] = toCancel;
     
     delete cancel;
     
@@ -53,7 +46,6 @@ void Commodity::handleCancel(Order *cancel) {
 void Commodity::handleReplace(Order *replace) {
     Order *toReplace = ordersBook[replace->id];
     toReplace->active = false;
-    cancelledOrdersBook[replace->id] = toReplace;
     handleOrder(replace);
 };
 
@@ -65,18 +57,17 @@ void Commodity::reduceOrderBook() {
             break;
         }
         
+        // Highest priority orders
         Order *topBuy = buyQueue.top();
         Order *topSell = sellQueue.top();
         
         // Ensure neither order was cancelled
         if (!topBuy->active) {
             buyQueue.pop();
-            cancelledOrdersBook.erase(topBuy->id);
             delete topBuy;
             continue;
         } else if (!topSell->active) {
             sellQueue.pop();
-            cancelledOrdersBook.erase(topSell->id);
             delete topSell;
             continue;
         }
@@ -110,11 +101,13 @@ void Commodity::reduceOrderBook() {
 }
 
 Commodity::~Commodity() {
-    for (std::unordered_map<int, Order *>::iterator it = ordersBook.begin(); it != ordersBook.end(); it++) {
-        delete it->second;
+    while (!buyQueue.empty()) {
+        delete buyQueue.top();
+        buyQueue.pop()
     }
     
-    for (std::unordered_map<int, Order *>::iterator it = cancelledOrdersBook.begin(); it != cancelledOrdersBook.end(); it++) {
-        delete it->second;
+    while (!sellQueue.empty()) {
+        delete sellQueue.top();
+        sellQueue.pop();
     }
 }

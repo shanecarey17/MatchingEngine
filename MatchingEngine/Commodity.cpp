@@ -91,7 +91,6 @@ void Commodity::reduceOrderBook() {
             buyQueue.pop();
             delete topBuy;
         }
-        
         if (topSell->quantity == 0) {
             ordersBook.erase(topSell->id);
             sellQueue.pop();

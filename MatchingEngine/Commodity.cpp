@@ -53,6 +53,7 @@ void Commodity::handleCancel(Order *cancel) {
 void Commodity::handleReplace(Order *replace) {
     Order *toReplace = ordersBook[replace->id];
     toReplace->active = false;
+    cancelledOrdersBook[replace->id] = toReplace;
     handleOrder(replace);
 };
 

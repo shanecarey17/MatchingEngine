@@ -103,7 +103,7 @@ void Commodity::reduceOrderBook() {
 Commodity::~Commodity() {
     while (!buyQueue.empty()) {
         delete buyQueue.top();
-        buyQueue.pop()
+        buyQueue.pop();
     }
     
     while (!sellQueue.empty()) {

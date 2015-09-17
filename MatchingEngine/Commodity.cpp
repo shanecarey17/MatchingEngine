@@ -54,7 +54,7 @@ void Commodity::reduceOrderBook() {
     while (true) {
         // From the invariant that the only possible trade is from the top of both queues
         if (buyQueue.empty() || sellQueue.empty()) {
-            break;
+            return;
         }
         
         // Highest priority orders
@@ -74,7 +74,7 @@ void Commodity::reduceOrderBook() {
         
         // Continue only if the prices match
         if (topBuy->price < topSell->price) {
-            break;
+            return;
         }
         
         // We have a match FILL the order by subtracting out min quantity

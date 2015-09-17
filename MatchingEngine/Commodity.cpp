@@ -42,7 +42,8 @@ void Commodity::handleCancel(Order *cancel) {
     // Set order with same id inactive
     Order *toCancel = ordersBook[cancel->id];
     toCancel->active = false;
-    ordersBook.erase(toCancel->id);
+    ordersBook.erase(cancel->id);
+    cancelledOrdersBook[cancel->id] = toCancel;
     
     delete cancel;
     
@@ -69,10 +70,12 @@ void Commodity::reduceOrderBook() {
         // Ensure neither order was cancelled
         if (!topBuy->active) {
             buyQueue.pop();
+            cancelledOrdersBook.erase(topBuy->id);
             delete topBuy;
             continue;
         } else if (!topSell->active) {
             sellQueue.pop();
+            cancelledOrdersBook.erase(topSell->id);
             delete topSell;
             continue;
         }
@@ -107,6 +110,10 @@ void Commodity::reduceOrderBook() {
 
 Commodity::~Commodity() {
     for (std::unordered_map<int, Order *>::iterator it = ordersBook.begin(); it != ordersBook.end(); it++) {
+        delete it->second;
+    }
+    
+    for (std::unordered_map<int, Order *>::iterator it = cancelledOrdersBook.begin(); it != cancelledOrdersBook.end(); it++) {
         delete it->second;
     }
 }
